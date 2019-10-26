@@ -1,0 +1,41 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
+          <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+          {% if object.author == user %}
+            <div>
+              <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+              <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+            </div>
+          {% endif %}
+        </div>
+        <div style="margin-top:20px;">
+          <p>Measurement number: {{ post.title }}</p>
+          {% if post.content == 0 %}
+          <p class="bg-warning text-dark">Information: <b>{{ post.info }}</b></p>
+          {% elif post.content <= 90 and post.content > 0 %}
+          <p class="article-content">Insulin dose: 25</p>
+          {% elif post.content > 90 and post.content <= 100 %}
+          <p class="article-content">Insulin dose: <b>26</b></p>
+          {% elif post.content > 100 and post.content <= 115 %}
+          <p class="article-content">Insulin dose: <b>27</b></p>
+          {% elif post.content > 116 and post.content <= 125 %}
+          <p class="article-content">Insulin dose: <b>28</b></p>
+          {% elif post.content > 126 and post.content <= 135 %}
+          <p class="article-content">Insulin dose: <b>29</b></p>
+          {% elif post.content > 136 and post.content <= 145 %}
+          <p class="article-content">Insulin dose: <b>30</b></p>
+          {% elif post.content > 146 and post.content <= 155 %}
+          <p class="article-content">Insulin dose: <b>31</b></p>
+          {% elif post.content > 156 and post.content <= 165 %}
+          <p class="article-content">Insulin dose: <b>32</b></p>
+          {% elif post.content > 166 and post.content <= 175 %}
+          <p class="article-content">Insulin dose: <b>33</b></p>
+          {% elif post.content > 176 and post.content < 300 %}
+          <p class="article-content">Insulin dose: <b>34</b></p>
+          {% endif %}
+    </article>
+{% endblock content %}

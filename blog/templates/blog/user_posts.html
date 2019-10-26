@@ -1,0 +1,64 @@
+{% extends "blog/base.html" %}
+{% block content %}
+  <h1 class="mb-3">Measurements by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
+  {% for post in posts %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+          <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+        </div>
+        <div style="margin-top:20px;">
+          {% if post.content is not 0 %}
+            <p><a class="article-title" href="{% url 'post-detail' post.id %}">Information number: {{ post.title }}</a></p>
+          {% endif %}
+          <p>Measurement number: {{ post.title }}</p>
+          {% if post.content == 0 %}
+          <p class="bg-warning text-dark">Information: <b>{{ post.info }}</b></p>
+          {% elif post.content <= 90 and post.content > 0 %}
+          <p class="article-content">Insulin dose: 25</p>
+          {% elif post.content > 90 and post.content <= 100 %}
+          <p class="article-content">Insulin dose: <b>26</b></p>
+          {% elif post.content > 100 and post.content <= 115 %}
+          <p class="article-content">Insulin dose: <b>27</b></p>
+          {% elif post.content > 116 and post.content <= 125 %}
+          <p class="article-content">Insulin dose: <b>28</b></p>
+          {% elif post.content > 126 and post.content <= 135 %}
+          <p class="article-content">Insulin dose: <b>29</b></p>
+          {% elif post.content > 136 and post.content <= 145 %}
+          <p class="article-content">Insulin dose: <b>30</b></p>
+          {% elif post.content > 146 and post.content <= 155 %}
+          <p class="article-content">Insulin dose: <b>31</b></p>
+          {% elif post.content > 156 and post.content <= 165 %}
+          <p class="article-content">Insulin dose: <b>32</b></p>
+          {% elif post.content > 166 and post.content <= 175 %}
+          <p class="article-content">Insulin dose: <b>33</b></p>
+          {% elif post.content > 176 and post.content < 300 %}
+          <p class="article-content">Insulin dose: <b>34</b></p>
+          {% endif %}
+        </div>
+      </div>
+    </article>
+  {% endfor %}
+  {% if is_paginated %}
+
+    {% if page_obj.has_previous %}
+      <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+      <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}
+
+  {% endif %}
+{% endblock content %}
